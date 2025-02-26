@@ -17,20 +17,37 @@ export default function setupPropertyPanel(graphComponent: GraphComponent) {
   shapeDropdownElement.addEventListener('change', () =>
     onShapeDropdownChange(shapeDropdownElement, graphComponent),
   )
+
+  graphComponent.selection.addEventListener('item-added', () =>
+    onSelectionChange(shapeDropdownElement, graphComponent),
+  )
 }
 
 function onShapeDropdownChange(
   shapeDropdownElement: HTMLSelectElement,
   graphComponent: GraphComponent,
 ) {
+  console.log('dropdown change listener')
   const shapeValue = shapeDropdownElement.value
   const graph = graphComponent.graph
-  const firstNode = graph.nodes.first()
-  if (firstNode) {
+  graphComponent.selection.nodes.forEach((node) => {
     graph.setStyle(
-      firstNode,
+      node,
       // @ts-ignore
       new ShapeNodeStyle({ shape: shapeValue }),
     )
+  })
+}
+
+function onSelectionChange(
+  shapeDropdownElement: HTMLSelectElement,
+  graphComponent: GraphComponent,
+) {
+  console.log('selection change listener')
+  if (graphComponent.selection.nodes.size > 0) {
+    const firstSelectedNodeStyle = graphComponent.selection.nodes.first()
+      ?.style as ShapeNodeStyle
+    const shape = firstSelectedNodeStyle.shape
+    shapeDropdownElement.value = ShapeNodeShape.getName(shape)
   }
 }
