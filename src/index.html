@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Style Configurator</title>
+
+  <link rel="stylesheet" href="reset.css">
+
+  <style>
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+    .graph-component {
+        flex: 1;
+    }
+    .properties-panel {
+        flex: 1;
+    }
+    .editor {
+        flex: 1;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Style Configurator</h1>
+</header>
+<div class="container">
+<div class="graph-component"></div>
+<div class="properties-panel"></div>
+<div class="editor"></div>
+</div>
+
+<script src="./index.ts" type="module"></script>
+</body>
+</html>
