@@ -1,6 +1,7 @@
 import { StyleConfiguration } from './style-configuration'
 import { basicSetup } from 'codemirror'
 import { EditorView } from '@codemirror/view'
+import { EditorState } from '@codemirror/state'
 
 export class EditorComponent {
   private copyButton: HTMLButtonElement
@@ -16,7 +17,7 @@ export class EditorComponent {
     this.view = new EditorView({
       doc: '',
       parent,
-      extensions: [basicSetup],
+      extensions: [basicSetup, EditorState.readOnly.of(true)],
     })
   }
 
