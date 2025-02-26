@@ -1,0 +1,62 @@
+body {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    font-family: Montserrat, sans-serif;
+}
+
+header {
+    background-color: #29323c;
+    color: white;
+    padding: 3rem 3rem 1rem 3rem;
+}
+
+.mb05 {
+    margin-bottom: 0.5rem;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    padding: 3rem;
+}
+
+.graph-component {
+    flex: 1;
+    border-right: 2px solid #29323c;
+}
+
+.properties-panel {
+    flex: 1;
+    padding: 0 1rem;
+    border-right: 2px solid #29323c;
+}
+
+.editor-container {
+    flex: 1;
+    position: relative;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cm-editor {
+    height: 100%;
+    width: 100%;
+    font-family: monospace;
+}
+
+.copy-code {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    background-color: #29323c;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}

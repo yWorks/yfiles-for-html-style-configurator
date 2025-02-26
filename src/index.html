@@ -5,44 +5,8 @@
   <title>Style Configurator</title>
 
   <link rel="stylesheet" href="reset.css">
-
-  <style>
-      .container {
-          display: flex;
-          height: 100vh;
-      }
-
-      .graph-component {
-          flex: 1;
-      }
-
-      .properties-panel {
-          flex: 1;
-      }
-
-      .editor-container {
-          flex: 1;
-          position: relative;
-      }
-
-      .input-container {
-          display: flex;
-          flex-direction: column;
-      }
-
-      .cm-editor {
-          height: 100%;
-          width: 100%;
-          font-family: monospace;
-      }
-
-      .copy-code {
-          z-index: 1;
-          position: absolute;
-          top: 0;
-          right: 0;
-      }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -51,10 +15,10 @@
 <div class="container">
   <div class="graph-component"></div>
   <div class="properties-panel">
-    <h2>Properties</h2>
+    <h2 class="mb05">Properties</h2>
     <div class="input-container">
       <label for="shape-dropdown">Choose your favorite shape:</label>
-      <select id="shape-dropdown"></select>
+      <select id="shape-dropdown" class="mb05"></select>
       <label for="fill-input">Choose your favorite fill:</label>
       <input type="color" id="fill-input" />
     </div>
