@@ -8,7 +8,14 @@ body {
 header {
     background-color: #29323c;
     color: white;
-    padding: 3rem 3rem 1rem 3rem;
+    padding: 3rem 1rem 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fill-white {
+    fill: white;
 }
 
 .mb05 {
