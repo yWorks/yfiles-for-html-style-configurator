@@ -1,6 +1,7 @@
 import { GraphComponent, GraphEditorInputMode, License } from '@yfiles/yfiles'
 import license from './license.json'
 import { EditorComponent } from './editor-component'
+import setupPropertyPanel from './properties-panel'
 
 License.value = license
 
@@ -11,6 +12,8 @@ graphComponent.graph.createNode()
 graphComponent.inputMode = new GraphEditorInputMode()
 
 void graphComponent.fitGraphBounds()
+
+setupPropertyPanel(graphComponent)
 
 const editor = new EditorComponent(document.querySelector(".editor-container")!)
 
