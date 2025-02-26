@@ -17,8 +17,19 @@
     .properties-panel {
         flex: 1;
     }
-    .editor {
+    .editor-container {
         flex: 1;
+        position: relative;
+    }
+    .editor {
+        height: 100%;
+        width: 100%;
+        font-family: monospace;
+    }
+    .copy-code {
+        position: absolute;
+        top: 0;
+        right: 0;
     }
   </style>
 </head>
@@ -29,7 +40,10 @@
 <div class="container">
 <div class="graph-component"></div>
 <div class="properties-panel"></div>
-<div class="editor"></div>
+<div class="editor-container">
+  <textarea readonly class="editor"></textarea>
+  <button class="copy-code">Copy</button>
+</div>
 </div>
 
 <script src="./index.ts" type="module"></script>

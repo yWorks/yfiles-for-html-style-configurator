@@ -1,5 +1,6 @@
 import { GraphComponent, GraphEditorInputMode, License } from '@yfiles/yfiles'
 import license from './license.json'
+import { EditorComponent } from './editor-component'
 
 License.value = license
 
@@ -10,3 +11,7 @@ graphComponent.graph.createNode()
 graphComponent.inputMode = new GraphEditorInputMode()
 
 void graphComponent.fitGraphBounds()
+
+const editor = new EditorComponent()
+
+editor.update({ shape: 'ellipse' })
