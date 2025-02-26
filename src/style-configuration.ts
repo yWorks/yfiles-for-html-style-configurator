@@ -1,3 +1,12 @@
-import { ShapeNodeStyle } from '@yfiles/yfiles'
+import { ArrowNodeStyle, ShapeNodeStyle } from '@yfiles/yfiles'
 
-export type StyleConfiguration = ConstructorParameters<typeof ShapeNodeStyle>[0]
+export type ShapeNodeStyleConfiguration = ConstructorParameters<
+  typeof ShapeNodeStyle
+>[0]
+export type ArrowNodeStyleConfiguration = ConstructorParameters<
+  typeof ArrowNodeStyle
+>[0]
+
+export type StyleConfiguration =
+  | ShapeNodeStyleConfiguration
+  | ArrowNodeStyleConfiguration
