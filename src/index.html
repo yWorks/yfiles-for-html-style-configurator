@@ -22,19 +22,26 @@
 
       .editor-container {
           flex: 1;
-      position: relative;
-    }
-    .cm-editor {
-        height: 100%;
-        width: 100%;
-        font-family: monospace;
-    }
-    .copy-code {
-        z-index: 1;
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
+          position: relative;
+      }
+
+      .input-container {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .cm-editor {
+          height: 100%;
+          width: 100%;
+          font-family: monospace;
+      }
+
+      .copy-code {
+          z-index: 1;
+          position: absolute;
+          top: 0;
+          right: 0;
+      }
   </style>
 </head>
 <body>
@@ -45,12 +52,16 @@
   <div class="graph-component"></div>
   <div class="properties-panel">
     <h2>Properties</h2>
-    <label for="shape-dropdown">Choose your favorite shape:</label>
-    <select id="shape-dropdown"></select>
+    <div class="input-container">
+      <label for="shape-dropdown">Choose your favorite shape:</label>
+      <select id="shape-dropdown"></select>
+      <label for="fill-input">Choose your favorite fill:</label>
+      <input type="color" id="fill-input" />
+    </div>
   </div>
   <div class="editor-container">
-  <button class="copy-code">Copy</button>
-</div>
+    <button class="copy-code">Copy</button>
+  </div>
 </div>
 
 <script src="./index.ts" type="module"></script>

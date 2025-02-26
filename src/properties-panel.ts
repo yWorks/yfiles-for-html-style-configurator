@@ -1,25 +1,46 @@
-import { GraphComponent, ShapeNodeShape, ShapeNodeStyle } from '@yfiles/yfiles'
+import {
+  Color,
+  CssFill,
+  Fill,
+  FillConvertible,
+  GraphComponent,
+  ShapeNodeShape,
+  ShapeNodeStyle,
+} from '@yfiles/yfiles'
+import { StyleConfiguration } from './style-configuration'
+
+let propertyState: StyleConfiguration = {
+  shape: ShapeNodeShape.RECTANGLE,
+  fill: '#FFFFFF',
+}
+const shapeDropdownElement =
+  document.querySelector<HTMLSelectElement>('#shape-dropdown')
+const colorPickerElement =
+  document.querySelector<HTMLInputElement>('#fill-input')
 
 export default function setupPropertyPanel(graphComponent: GraphComponent) {
-  const shapeDropdownElement =
-    document.querySelector<HTMLSelectElement>('#shape-dropdown')
-  if (!shapeDropdownElement) {
-    return
-  }
-  const shapes = Object.keys(ShapeNodeShape)
-  shapes.forEach((shape) => {
-    const optionElement = document.createElement('option')
-    shapeDropdownElement.appendChild(optionElement)
-    optionElement.textContent = shape
-    optionElement.value = shape
-  })
+  if (shapeDropdownElement) {
+    const shapes = Object.keys(ShapeNodeShape)
+    shapes.forEach((shape) => {
+      const optionElement = document.createElement('option')
+      shapeDropdownElement.appendChild(optionElement)
+      optionElement.textContent = shape
+      optionElement.value = shape
+    })
 
-  shapeDropdownElement.addEventListener('change', () =>
-    onShapeDropdownChange(shapeDropdownElement, graphComponent),
-  )
+    shapeDropdownElement.addEventListener('change', () =>
+      onShapeDropdownChange(shapeDropdownElement, graphComponent),
+    )
+  }
+
+  if (colorPickerElement) {
+    colorPickerElement.addEventListener('input', () =>
+      onColorInputChange(colorPickerElement, graphComponent),
+    )
+  }
 
   graphComponent.selection.addEventListener('item-added', () =>
-    onSelectionChange(shapeDropdownElement, graphComponent),
+    onSelectionChange(graphComponent),
   )
 }
 
@@ -27,27 +48,50 @@ function onShapeDropdownChange(
   shapeDropdownElement: HTMLSelectElement,
   graphComponent: GraphComponent,
 ) {
-  console.log('dropdown change listener')
-  const shapeValue = shapeDropdownElement.value
-  const graph = graphComponent.graph
-  graphComponent.selection.nodes.forEach((node) => {
-    graph.setStyle(
-      node,
-      // @ts-ignore
-      new ShapeNodeStyle({ shape: shapeValue }),
-    )
-  })
+  // @ts-ignore
+  propertyState.shape = shapeDropdownElement.value
+  updateSelectedNodeStyle(graphComponent)
 }
 
-function onSelectionChange(
-  shapeDropdownElement: HTMLSelectElement,
-  graphComponent: GraphComponent,
-) {
-  console.log('selection change listener')
+function onSelectionChange(graphComponent: GraphComponent) {
   if (graphComponent.selection.nodes.size > 0) {
     const firstSelectedNodeStyle = graphComponent.selection.nodes.first()
       ?.style as ShapeNodeStyle
-    const shape = firstSelectedNodeStyle.shape
-    shapeDropdownElement.value = ShapeNodeShape.getName(shape)
+    if (shapeDropdownElement) {
+      shapeDropdownElement.value = ShapeNodeShape.getName(
+        firstSelectedNodeStyle.shape,
+      )
+    }
+    if (colorPickerElement) {
+      let fillColor = '#ffffff'
+
+      if (firstSelectedNodeStyle.fill instanceof Color) {
+        const fill = firstSelectedNodeStyle.fill as Color
+        fillColor = `#${toHex(fill.r)}${toHex(fill.g)}${toHex(fill.b)}`
+      } else if (firstSelectedNodeStyle.fill instanceof CssFill) {
+        fillColor = firstSelectedNodeStyle.fill.value
+      }
+      colorPickerElement.value = fillColor
+    }
   }
+}
+
+function onColorInputChange(
+  colorPickerElement: HTMLInputElement,
+  graphComponent: GraphComponent,
+) {
+  // @ts-ignore
+  propertyState.fill = colorPickerElement.value as FillConvertible
+  updateSelectedNodeStyle(graphComponent)
+}
+
+function updateSelectedNodeStyle(graphComponent: GraphComponent) {
+  graphComponent.selection.nodes.forEach((node) => {
+    graphComponent.graph.setStyle(node, new ShapeNodeStyle(propertyState))
+  })
+}
+
+function toHex(c: number) {
+  const hex = c.toString(16)
+  return hex.length == 1 ? '0' + hex : hex
 }
