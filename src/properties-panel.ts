@@ -103,6 +103,7 @@ function createPanelForShapeNodeStyle(
 ) {
   shapeDropdownElement = document.createElement('select')
   shapeDropdownElement.setAttribute('id', 'shape-dropdown')
+  shapeDropdownElement.classList.add('mb05')
   const labelShapeSelect = document.createElement('label')
   labelShapeSelect.setAttribute('for', 'shape-dropdown')
   labelShapeSelect.textContent = 'Choose your favorite shape'
@@ -147,6 +148,7 @@ function createPanelForArrowNodeStyle(
 ) {
   shapeDropdownElement = document.createElement('select')
   shapeDropdownElement.setAttribute('id', 'shape-dropdown')
+  shapeDropdownElement.classList.add('mb05')
   const labelShapeSelect = document.createElement('label')
   labelShapeSelect.setAttribute('for', 'shape-dropdown')
   labelShapeSelect.textContent = 'Choose your favorite shape'
