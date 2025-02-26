@@ -21,12 +21,13 @@
         flex: 1;
         position: relative;
     }
-    .editor {
+    .cm-editor {
         height: 100%;
         width: 100%;
         font-family: monospace;
     }
     .copy-code {
+        z-index: 1;
         position: absolute;
         top: 0;
         right: 0;
@@ -41,7 +42,6 @@
 <div class="graph-component"></div>
 <div class="properties-panel"></div>
 <div class="editor-container">
-  <textarea readonly class="editor"></textarea>
   <button class="copy-code">Copy</button>
 </div>
 </div>
