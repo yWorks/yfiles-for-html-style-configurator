@@ -1,10 +1,10 @@
 import {
   Color,
   CssFill,
-  Fill,
   FillConvertible,
   GraphComponent,
   ShapeNodeShape,
+  ShapeNodeShapeStringValues,
   ShapeNodeStyle,
 } from '@yfiles/yfiles'
 import { StyleConfiguration } from './style-configuration'
@@ -58,9 +58,9 @@ function onSelectionChange(graphComponent: GraphComponent) {
     const firstSelectedNodeStyle = graphComponent.selection.nodes.first()
       ?.style as ShapeNodeStyle
     if (shapeDropdownElement) {
-      shapeDropdownElement.value = ShapeNodeShape.getName(
-        firstSelectedNodeStyle.shape,
-      )
+      const shape = ShapeNodeShape.getName(firstSelectedNodeStyle.shape)
+      shapeDropdownElement.value = shape
+      propertyState!.shape = shape as ShapeNodeShapeStringValues
     }
     if (colorPickerElement) {
       let fillColor = '#ffffff'
@@ -72,6 +72,7 @@ function onSelectionChange(graphComponent: GraphComponent) {
         fillColor = firstSelectedNodeStyle.fill.value
       }
       colorPickerElement.value = fillColor
+      propertyState!.fill = fillColor
     }
   }
 }
