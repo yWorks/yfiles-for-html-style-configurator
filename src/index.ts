@@ -25,14 +25,14 @@ const editor = new EditorComponent(document.querySelector('.editor-container')!)
 graphComponent.graph.addEventListener('node-style-changed', (evt) => {
   const item = graphComponent.selection.first()
   if (item instanceof INode && item === evt.item) {
-    editor.update(parseNodeStyle(item.style))
+    editor.update(item.style)
   }
 })
 
 graphComponent.selection.addEventListener('item-added', (evt) => {
   const item = evt.item
   if (item instanceof INode) {
-    editor.update(parseNodeStyle(item.style))
+    editor.update(item.style)
   }
 })
 

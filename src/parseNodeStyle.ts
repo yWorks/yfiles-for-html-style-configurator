@@ -1,5 +1,12 @@
-import { StyleConfiguration } from './style-configuration'
 import {
+  ArrowNodeStyleConfiguration,
+  ShapeNodeStyleConfiguration,
+  StyleConfiguration,
+} from './style-configuration'
+import {
+  ArrowNodeStyle,
+  ArrowStyleShape,
+  ArrowStyleShapeStringValues,
   Color,
   CssFill,
   DashStyle,
@@ -15,40 +22,51 @@ import {
 } from '@yfiles/yfiles'
 
 const defaultShapeNodeStyle = new ShapeNodeStyle()
+const defaultArrowNodeStyle = new ArrowNodeStyle()
 
 export function parseNodeStyle(style: INodeStyle): StyleConfiguration {
-  if (!(style instanceof ShapeNodeStyle)) {
-    return {}
+  if (style instanceof ShapeNodeStyle) {
+    const configuration = {} as NonNullable<ShapeNodeStyleConfiguration>
+    if (!fillEquals(style.fill, defaultShapeNodeStyle.fill)) {
+      configuration.fill = parseFill(style.fill)
+    }
+    if (!strokeEquals(style.stroke, defaultShapeNodeStyle.stroke)) {
+      configuration.stroke = parseStroke(style.stroke)
+    }
+    if (
+      style.keepIntrinsicAspectRatio !==
+      defaultShapeNodeStyle.keepIntrinsicAspectRatio
+    ) {
+      configuration.keepIntrinsicAspectRatio = style.keepIntrinsicAspectRatio
+    }
+    if (style.cssClass !== defaultShapeNodeStyle.cssClass) {
+      configuration.cssClass = style.cssClass
+    }
+    if (style.shape !== defaultShapeNodeStyle.shape) {
+      configuration.shape = formatEnum(
+        ShapeNodeShape.getName(style.shape),
+      ) as ShapeNodeShapeStringValues
+    }
+    return configuration
+  } else if (style instanceof ArrowNodeStyle) {
+    const configuration = {} as NonNullable<ArrowNodeStyleConfiguration>
+    if (!fillEquals(style.fill, defaultArrowNodeStyle.fill)) {
+      configuration.fill = parseFill(style.fill)
+    }
+    if (!strokeEquals(style.stroke, defaultArrowNodeStyle.stroke)) {
+      configuration.stroke = parseStroke(style.stroke)
+    }
+    if (style.cssClass !== defaultArrowNodeStyle.cssClass) {
+      configuration.cssClass = style.cssClass
+    }
+    if (style.shape !== defaultArrowNodeStyle.shape) {
+      configuration.shape = formatEnum(
+        ArrowStyleShape.getName(style.shape),
+      ) as ArrowStyleShapeStringValues
+    }
+    return configuration
   }
-
-  const configuration = {} as NonNullable<StyleConfiguration>
-
-  if (!fillEquals(style.fill, defaultShapeNodeStyle.fill)) {
-    configuration.fill = parseFill(style.fill)
-  }
-
-  if (!strokeEquals(style.stroke, defaultShapeNodeStyle.stroke)) {
-    configuration.stroke = parseStroke(style.stroke)
-  }
-
-  if (
-    style.keepIntrinsicAspectRatio !==
-    defaultShapeNodeStyle.keepIntrinsicAspectRatio
-  ) {
-    configuration.keepIntrinsicAspectRatio = style.keepIntrinsicAspectRatio
-  }
-
-  if (style.cssClass !== defaultShapeNodeStyle.cssClass) {
-    configuration.cssClass = style.cssClass
-  }
-
-  if (style.shape !== defaultShapeNodeStyle.shape) {
-    configuration.shape = formatEnum(
-      ShapeNodeShape.getName(style.shape),
-    ) as ShapeNodeShapeStringValues
-  }
-
-  return configuration
+  return {}
 }
 
 function strokeEquals(s1: Stroke | null, s2: Stroke | null) {

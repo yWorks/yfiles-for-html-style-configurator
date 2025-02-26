@@ -1,7 +1,8 @@
-import { StyleConfiguration } from './style-configuration'
 import { basicSetup } from 'codemirror'
 import { EditorView } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
+import { INodeStyle, ShapeNodeStyle } from '@yfiles/yfiles'
+import { parseNodeStyle } from './parseNodeStyle'
 
 export class EditorComponent {
   private copyButton: HTMLButtonElement
@@ -21,8 +22,11 @@ export class EditorComponent {
     })
   }
 
-  update(json: StyleConfiguration) {
-    const text = `new ShapeNodeStyle(${JSON.stringify(json, null, 2)})`
+  update(nodeStyle: INodeStyle) {
+    const json = parseNodeStyle(nodeStyle)
+    const type =
+      nodeStyle instanceof ShapeNodeStyle ? 'ShapeNodeStyle' : 'ArrowNodeStyle'
+    const text = `new ${type}(${JSON.stringify(json, null, 2)})`
     this.setText(text)
   }
 
